@@ -7,8 +7,7 @@
 public class Patron extends Person
 {
 	private int age;
-	private int username;
-	private int passwd;
+	private String userName, passwd;
 	
 	/**
 	 * Creates a Patron object using the super constructor from the Person parent class.
@@ -16,27 +15,50 @@ public class Patron extends Person
 	 * @param lastName
 	 * @param age
 	 */
-	public Patron(String firstName, String lastName, int age,String usrname,String pass)
+	public Patron(String firstName, String lastName, int age, String username, String pass)
 	{
 		super(firstName,lastName);
 		this.age = age;
-		username = usrname;
+		userName = username;
 		passwd = pass;
 	}
-	public String getUsername(){
-		return username;
+	
+	/**
+	 * Returns the user name of the patron.
+	 * @return userName
+	 */
+	public String getUsername()
+	{
+		return userName;
 	}
-	public void setUsername(String name){
-		
-		username = name;
+	
+	/**
+	 * Sets the user name for the patron.
+	 * @param name
+	 */
+	public void setUsername(String name)
+	{
+		userName = name;
 	}
-	public String getPasswd(){
+	
+	/**
+	 * Returns the password for the patron.
+	 * @return passwd
+	 */
+	public String getPasswd()
+	{
 		return passwd;
 	}
-	public void setPasswd(String pass){
-		
+	
+	/**
+	 * Sets the password for the patron.
+	 * @param pass
+	 */
+	public void setPasswd(String pass)
+	{
 		passwd = pass;
 	}
+		
 	/**
 	 * Returns the age of the patron.
 	 * @return age
@@ -62,7 +84,7 @@ public class Patron extends Person
 	 */
 	public boolean equals(Patron patron)
 	{
-		if(this.equals(patron) && age == patron.getAge())
+		if(super.equals(patron) && age == patron.getAge())
 			return true;
 		else
 			return false;
@@ -74,7 +96,7 @@ public class Patron extends Person
 	 */
 	public String toString()
 	{
-		String info = super.toString() + "Age: " + age;
+		String info = super.toString() + "; Age: " + age;
 		return info;
 	}
 	
