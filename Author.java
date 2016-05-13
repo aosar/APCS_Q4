@@ -45,7 +45,7 @@ public class Author extends Person
 	 */
 	public boolean equals(Author Author)
 	{
-		if(this.equals(Author) && numberOfYearsWriting == Author.getNumberOfYearsWriting())
+		if(super.equals(Author) && numberOfYearsWriting == Author.getNumberOfYearsWriting())
 			return true;
 		else
 			return false;
@@ -57,7 +57,7 @@ public class Author extends Person
 	 */
 	public String toString()
 	{
-		String info = super.toString() + "Number of Years of Writing: " + numberOfYearsWriting;
+		String info = super.toString() + "; Number of Years of Writing: " + numberOfYearsWriting;
 		return info;
 	}
 	
