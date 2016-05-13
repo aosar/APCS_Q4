@@ -8,6 +8,8 @@ public class Book
 	private Author author;
 	private int id, year;
 	private String title;
+	private boolean checkedOutStatus;
+	private Date checkOutDate, returnDate;
 	
 	/**
 	 * Creates a specific book with specific information.
@@ -22,6 +24,16 @@ public class Book
 		this.author = author;
 		this.year = year;
 		this.id = id;
+		checkedOutStatus = false;
+		try
+		{
+			checkOutDate = new Date(2016,1,1);
+			returnDate = new Date(2016,1,1);
+		}
+		catch(InvalidDateException e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/**
@@ -61,6 +73,33 @@ public class Book
 	}
 	
 	/**
+	 * Returns the checked out status of the book.
+	 * @return checkedOutStatus
+	 */
+	public boolean getCheckedOutStatus()
+	{
+		return checkedOutStatus;
+	}
+	
+	/**
+	 * Returns the check out date.
+	 * @return date
+	 */
+	public Date getCheckOutDate()
+	{
+		return checkOutDate;
+	}
+	
+	/**
+	 * Returns the return date.
+	 * @return date
+	 */
+	public Date getReturnDate()
+	{
+		return returnDate;
+	}
+	
+	/**
 	 * Sets the title for the book
 	 * @param title
 	 */
@@ -97,12 +136,43 @@ public class Book
 	}
 	
 	/**
+	 * Sets the checked out status of the book.
+	 * @param checkedOutStatus
+	 */
+	public void setCheckedOutStatus(boolean checkedOutStatus)
+	{
+		this.checkedOutStatus = checkedOutStatus;
+	}
+	
+	/**
+	 * Sets the check out date.
+	 * @param Date
+	 */
+	public void setCheckOutDate(Date date)
+	{
+		checkOutDate = date;
+	}
+	
+	/**
+	 * Sets the return date.
+	 * @param date
+	 */
+	public void setReturnDate(Date date)
+	{
+		returnDate = date;
+	}
+	
+	/**
 	 * Compares two books.
 	 * @param Book
 	 * @return boolean
 	 */
 	public boolean equals(Book book)
 	{
+		if(book == null)
+		{
+			return false;
+		}
 		if(title.compareTo(book.getTitle()) == 0 && author.equals(book.getAuthor()) && year == book.getYear() && id == book.getID())
 			return true;
 		else
