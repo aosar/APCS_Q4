@@ -3,7 +3,7 @@
  * @author Justin Orr, Arianna Osar
  *
  */
-public class Person 
+public class Person
 {
 	private String firstName, lastName;
 	
@@ -37,6 +37,16 @@ public class Person
 	}
 	
 	/**
+	 * Returns the name of the person with the first and last name together.
+	 * @return name
+	 */
+	public String getName()
+	{
+		String name = getFirstName() + " " + getLastName();
+		return name;
+	}
+	
+	/**
 	 * Sets the first name of the person.
 	 * @param name
 	 */
@@ -61,6 +71,10 @@ public class Person
 	 */
 	public boolean equals(Person person)
 	{
+		if(person == null)
+		{
+			return false;
+		}
 		if(firstName.compareTo(person.getFirstName())==0 && lastName.compareTo(person.getLastName())==0)
 			return true;
 		else
