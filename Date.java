@@ -92,7 +92,7 @@ public class Date
 	 * @param year
 	 * @return boolean
 	 */
-	public boolean validYear(int year) throws InvalidDateException
+	private boolean validYear(int year) throws InvalidDateException
 	{
 		if(year < 1850 || year > 2016)
 			return false;
@@ -105,7 +105,7 @@ public class Date
 	 * @param month
 	 * @return boolean
 	 */
-	public boolean validMonth(int month)
+	private boolean validMonth(int month)
 	{
 		if(month < 1 || month > 12)
 			return false;
@@ -118,7 +118,7 @@ public class Date
 	 * @param day
 	 * @return boolean
 	 */
-	public boolean validDay(int day) throws InvalidDateException
+	private boolean validDay(int day)
 	{
 		if(day < 1 || day > 31)
 		{
@@ -134,13 +134,13 @@ public class Date
 		else if(month == 4 || month ==6 || month == 9 || month == 11)
 		{
 			if(day > 30)
-				return true;
+				return false;
 			else
 				return true;
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}
 	
@@ -148,7 +148,7 @@ public class Date
 	 * Formats the date.
 	 * @return date
 	 */
-	public String formatDate()
+	private String formatDate()
 	{
 		String date = "" + year + "/";
 		if(month < 10)
@@ -174,7 +174,7 @@ public class Date
 	/**
 	 * Updates the date based on the month.
 	 */
-	public void update()
+	private void update()
 	{
 		try
 		{
