@@ -94,7 +94,7 @@ public class Date
 	 */
 	private boolean validYear(int year) throws InvalidDateException
 	{
-		if(year < 1850 || year > 2016)
+		if(year < 1850)
 			return false;
 		else
 			return true;
