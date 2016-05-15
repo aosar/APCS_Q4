@@ -1,4 +1,5 @@
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ public class BookArchive
 			{
 				archive.get(author).addBook(book);
 				assignBookIDNumber(author,book);
+				sort();
 			}	
 		}
 		else
@@ -46,6 +48,37 @@ public class BookArchive
 			archive.put(author, new BookList());
 			archive.get(author).addBook(book);
 			assignBookIDNumber(author,book);
+			sort();
+		}
+	}
+	
+	/**
+	 * Adds an entry for an author that has a list of books already present.
+	 * @param author
+	 * @param bookList
+	 * @throws IncorrectAuthorException
+	 * @throws IsPresentException
+	 */
+	public void addEntry(Author author, BookList bookList) throws IsPresentException, IncorrectAuthorException
+	{
+		for(int i = 0; i < bookList.size(); i++)//Checks to make sure the books and author correspond with each other.
+		{
+			if(!bookList.getBook(i).getAuthor().equals(author))
+				throw new IncorrectAuthorException("The book: " + bookList.getBook(i) + " does not match it's author.");
+		}
+		if(containsAuthor(author))
+		{
+			for(int i = 0; i < archive.get(author).size(); i++)
+			{
+				if(archive.get(author).isPresent(bookList.getBook(i)))
+				{
+					throw new IsPresentException("The book: " + bookList.getBook(i) + " is already present in the list, please remove before entering.");
+				}
+			}
+		}
+		else
+		{
+			archive.put(author, bookList);
 		}
 	}
 	
@@ -136,7 +169,7 @@ public class BookArchive
 	}
 	
 	/**
-	 * Returns an arrayList of authors from of the archive.
+	 * Returns a list of authors from of the archive.
 	 * @return authorList
 	 */
 	public AuthorList getAuthorList()
@@ -157,6 +190,16 @@ public class BookArchive
 			}
 		}
 		return authorList;
+	}
+	
+	/**
+	 * Returns a list of authors in the form of an array list.
+	 * @return list
+	 */
+	public ArrayList<Author> getAuthorArrayList()
+	{
+		ArrayList<Author> list = getAuthorList().getAuthorList();
+		return list;
 	}
 	
 	/**
@@ -231,6 +274,24 @@ public class BookArchive
 	}
 	
 	/**
+	 * Returns an arrayList of the bookLists.
+	 * @return listOfBookLists
+	 */
+	public ArrayList<BookList> getBookLists()
+	{
+		Set<Author> setOfKeys = archive.keySet();
+		Iterator<Author> it = setOfKeys.iterator();
+		ArrayList<BookList> list = new ArrayList<BookList>();
+		while(it.hasNext())
+		{
+			Author a = it.next();
+			BookList b = archive.get(a);
+			list.add(b);
+		}
+		return list;
+	}
+	
+	/**
 	 * Creates a new id number for the book.
 	 * Format: ### 
 	 * --> the first # = author's position in the list.  
@@ -248,6 +309,44 @@ public class BookArchive
 		catch(NotPresentException e)
 		{
 			System.out.println(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Sorts the book archive.
+	 */
+	public void sort()
+	{
+		//Creates array lists of all of the entries and their correspondents
+		ArrayList<Author> listOfAuthors = getAuthorList().getAuthorList(); //The first returns a list of type AuthorList and the second is an arrayList of Authors.
+		ArrayList<BookList> listOfBookLists = getBookLists(); //Creates an array list of book lists so that they correspond with the right author.
+		//Sorts the new created arrayLists using bubble sort.
+		for(int i = 0; i < listOfAuthors.size(); i++)
+		{
+			for(int j = 1; j < listOfAuthors.size(); j++)
+			{
+				if(listOfAuthors.get(j).toString().compareTo(listOfAuthors.get(i).toString()) < 0)
+				{
+					Author temp = listOfAuthors.get(j);
+					BookList temp2 = listOfBookLists.get(j);
+					listOfAuthors.set(j, listOfAuthors.get(i));
+					listOfBookLists.set(j, listOfBookLists.get(i));
+					
+					listOfAuthors.set(i, temp);
+					listOfBookLists.set(i, temp2);
+				}
+			}
+		}
+		
+		//Clears the archive and re-adds them in the new order.
+		clearArchive();
+		for(int i = 0; i < listOfAuthors.size(); i++)
+		{
+			for(int j = 0; j < listOfBookLists.get(i).size(); j++)
+			{
+				try{addEntry(listOfAuthors.get(i), listOfBookLists.get(i));}
+				catch(IsPresentException | IncorrectAuthorException e){System.out.println(e.getMessage());}
+			}
 		}
 	}
 	
