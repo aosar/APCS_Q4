@@ -38,7 +38,7 @@ public class BookArchive
 			}
 			else
 			{
-				archive.get(author).addBook(book);
+				archive.get(author).add(book);
 				assignBookIDNumber(author,book);
 				sort();
 			}	
@@ -46,7 +46,7 @@ public class BookArchive
 		else
 		{
 			archive.put(author, new BookList());
-			archive.get(author).addBook(book);
+			archive.get(author).add(book);
 			assignBookIDNumber(author,book);
 			sort();
 		}
@@ -63,16 +63,16 @@ public class BookArchive
 	{
 		for(int i = 0; i < bookList.size(); i++)//Checks to make sure the books and author correspond with each other.
 		{
-			if(!bookList.getBook(i).getAuthor().equals(author))
-				throw new IncorrectAuthorException("The book: " + bookList.getBook(i) + " does not match it's author.");
+			if(!bookList.getObject(i).getAuthor().equals(author))
+				throw new IncorrectAuthorException("The book: " + bookList.getObject(i) + " does not match it's author.");
 		}
 		if(containsAuthor(author))
 		{
 			for(int i = 0; i < archive.get(author).size(); i++)
 			{
-				if(archive.get(author).isPresent(bookList.getBook(i)))
+				if(archive.get(author).isPresent(bookList.getObject(i)))
 				{
-					throw new IsPresentException("The book: " + bookList.getBook(i) + " is already present in the list, please remove before entering.");
+					throw new IsPresentException("The book: " + bookList.getObject(i) + " is already present in the list, please remove before entering.");
 				}
 			}
 		}
@@ -109,7 +109,7 @@ public class BookArchive
 		if(containsAuthor(author))
 		{
 			if(archive.get(author).isPresent(book))
-				archive.get(author).removeBook(book);
+				archive.get(author).removeObject(book);
 			else
 				throw new NotPresentException("The book: " + book.getTitle() + " is not listed with the author, so cannot remove.");
 		}
@@ -182,7 +182,7 @@ public class BookArchive
 			Author a = it.next();
 			try
 			{
-				authorList.addAuthor(a);
+				authorList.add(a);
 			}
 			catch(IsPresentException e)
 			{
@@ -198,7 +198,7 @@ public class BookArchive
 	 */
 	public ArrayList<Author> getAuthorArrayList()
 	{
-		ArrayList<Author> list = getAuthorList().getAuthorList();
+		ArrayList<Author> list = getAuthorList().getArrayList();
 		return list;
 	}
 	
@@ -219,7 +219,7 @@ public class BookArchive
 			{
 				for(int i = 0; i < list.size(); i++)
 				{
-					bookList.addBook(list.getBook(i));
+					bookList.add(list.getObject(i));
 				}
 			}
 			catch(IsPresentException e)
@@ -239,7 +239,7 @@ public class BookArchive
 	{
 		AuthorList list = getAuthorList();
 		if(containsAuthor(author))
-			return list.getAuthorIndex(author);
+			return list.getObjectIndex(author);
 		else
 			return -1;
 	}
@@ -255,7 +255,7 @@ public class BookArchive
 			return -1;
 		else
 		{
-			return archive.get(book.getAuthor()).getBookIndex(book);
+			return archive.get(book.getAuthor()).getObjectIndex(book);
 		}
 	}
 	
@@ -301,7 +301,7 @@ public class BookArchive
 	{
 		int idNumber = 0;
 		idNumber = (getAuthorIndex(author)+1)*100;
-		idNumber += archive.get(author).getBookIndex(book);
+		idNumber += archive.get(author).getObjectIndex(book);
 		try
 		{
 			archive.get(author).getBook(book.getTitle()).setID(idNumber);
@@ -318,7 +318,7 @@ public class BookArchive
 	public void sort()
 	{
 		//Creates array lists of all of the entries and their correspondents
-		ArrayList<Author> listOfAuthors = getAuthorList().getAuthorList(); //The first returns a list of type AuthorList and the second is an arrayList of Authors.
+		ArrayList<Author> listOfAuthors = getAuthorList().getArrayList(); //The first returns a list of type AuthorList and the second is an arrayList of Authors.
 		ArrayList<BookList> listOfBookLists = getBookLists(); //Creates an array list of book lists so that they correspond with the right author.
 		//Sorts the new created arrayLists using bubble sort.
 		for(int i = 0; i < listOfAuthors.size(); i++)
