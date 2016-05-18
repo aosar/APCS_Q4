@@ -15,16 +15,18 @@ public class Library
 	private LibraryFund fund;
 	private final double FEE = 20.00;
 	private Scanner fileScan;
+	private PatronList patronList;
 	
 	/**
 	 * Creates a library object.
 	 * @param fund
 	 * @param bookArchive
 	 */
-	public Library(BookArchive bookArchive, LibraryFund fund)
+	public Library(BookArchive bookArchive, LibraryFund fund, PatronList patronList)
 	{
 			this.bookArchive = bookArchive;
 			this.fund = fund;
+			this.patronList = patronList;
 	}
 	
 	/**
@@ -152,6 +154,15 @@ public class Library
 	public LibraryFund getLibraryFund()
 	{
 		return fund;
+	}
+	
+	/**
+	 * Returns the library's patron list.
+	 * @return patronlist
+	 */
+	public PatronList getPatronList()
+	{
+		return patronList;
 	}
 	
 	/**
