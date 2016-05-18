@@ -41,7 +41,7 @@ public class LibraryFund
 		{
 			money.add(0.0);
 			dates.add(new Date(2016,1,1));
-			patronsList.add(new Patron("Generic", "Patron", 0));
+			patronsList.add(new Patron("username","password", 0, "Generic", "Patron"));
 		}
 		catch(InvalidDateException e)
 		{
