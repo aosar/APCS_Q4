@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 /**
  * Creates a list of authors for the library's book archive.
  * @author Justin Orr
